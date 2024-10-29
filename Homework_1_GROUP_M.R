@@ -3,6 +3,9 @@
 install.packages("usethis")
 library(usethis)
 
+#### other libraries ####
+library(dplyr)
+
 # FSDS: Chapter 2, exercises 2.8, 2.16, 2.21, 2.26, 2.52, 2.53, 2.70
 
 # 2.8
@@ -235,3 +238,61 @@ hist(sample(X_population, size = 1))
 hist(sample(X_population, n))
 # now instead the sample is equal to the size of the population and is symmetric
 #
+
+
+
+#########################################################################
+# FSDS: Chapter 4, exercises 4.14, 4.16, 4.48
+#### 4.14 ####
+data = read.table("https://stat4ds.rwth-aachen.de/data/Students.dat", header = TRUE)
+summary(data)
+#a
+x_bar = mean(data$tv)
+s = sd(data$tv)
+# H0: the mean is 7.2
+# H1: the mean is different from 7.2
+z = qnorm(0.975) # having n > 60, we can assume normality
+SE = s/sqrt(length(data$tv))
+CI = x_bar + c(-1, 1)*z*SE
+# we can say that 95% of the students on average spend between 5.30 and almost 9 hours watching TV per week
+
+#b
+only_male = data %>% filter(gender == 0)
+only_female = data %>% filter(gender == 1)
+
+boxplot(only_male$tv, only_female$tv, names = c("Males", "Females"), ylab = "weekly hours watching tv")
+
+# assuming
+# -independent populations
+# -equal variances
+# - normality -> weakest assumption, barely 30 observations
+# --> use t student's distribution
+
+x_bar_male = mean(only_male$tv)
+x_bar_female = mean(only_female$tv)
+s_male = sd(only_male$tv)
+s_female = sd(only_female$tv)
+n_male = length(only_male$tv)
+n_female = length(only_female$tv)
+
+# assuming equal variance
+s_p = ((n_male -1)*(s_male^2) + (n_female - 1)*(s_female^2))/(n_male + n_female -1)
+# t = (x_bar_male - x_bar_female)/(s_p*(1/n_male + 1/n_female))
+SE_diff = (x_bar_male - x_bar_female)/((s_p^2)*(1/n_male + 1/n_female))
+mean_diff = x_bar_male - x_bar_female
+z = qt(0.975, n_male + n_female - 2)
+CI_diff = mean_diff + c(-1, 1)*z*SE_diff
+
+# Test for equality of means
+t.test(only_male$tv, only_female$tv, conf.level = 0.05)
+# we can not state that the variances are significantly different betweent the 2 groups
+# However the confidence interval seems to suggest that females watch slightly more tv than males
+
+# assuming unequal variance
+SE_diff = sqrt((s_male^2)/n_male + (s_female^2)/n_female)
+# t = (x_bar_male - x_bar_female)/(s_p*(1/n_male + 1/n_female))
+mean_diff = x_bar_male - x_bar_female
+z = qt(0.975, n_male + n_female - 2)
+CI_diff_uvars = mean_diff + c(-1, 1)*z*SE_diff
+
+# now we the interval crosses 0?? how is such a different result possible?
