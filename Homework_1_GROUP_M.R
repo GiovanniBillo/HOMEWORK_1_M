@@ -296,3 +296,29 @@ z = qt(0.975, n_male + n_female - 2)
 CI_diff_uvars = mean_diff + c(-1, 1)*z*SE_diff
 
 # now we the interval crosses 0?? how is such a different result possible?
+
+#### 4.16 ####
+data = read.table("https://stat4ds.rwth-aachen.de/data/Substance.dat", header = TRUE)
+
+# compare alcohol users and non-users
+alpha = 0.05
+n = sum(data$count)
+# find the total number of students that have or haven't used alcohol
+N_alcohol_total = sum(data[data$alcohol == "yes", 4])
+N_NOalcohol_total = sum(data[data$alcohol == "no", 4])
+N_marijuana = sum(data[data$alcohol == "yes" & data$marijuana == "yes", 4])
+N_NOalcohol_marijuana = sum(data[data$alcohol == "no" & data$marijuana == "yes", 4])
+
+pi_1_hat = N_marijuana/N_alcohol_total
+pi_2_hat = N_NOalcohol_marijuana/N_NOalcohol_total
+
+# by hand
+z = qnorm(1-alpha/2)
+SE = (pi_1_hat*(1 - pi_1_hat)/N_alcohol_total + pi_2_hat*(1 - pi_2_hat)/N_NOalcohol_total)
+CI_prop = (pi_1_hat - pi_2_hat) + c(-1, 1)*z*sqrt(SE)
+
+#with software
+prop.test(c(955, 5), c(1949, 327), conf.level = alpha, correct = F)
+
+## interpretation: there seems to be a significant mean difference in the use of marijuana 
+## between students that used alcohol before and students who didn't.
