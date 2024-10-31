@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section*{Exercise 4.48}
+
+\subsection*{Given}
+
+\[
+\text{Given } \quad SE = \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}
+\]
+
+\text{With 95\% likelihood, find } 
+$$ SE \leq \frac{1}{\sqrt{n}} \quad \text{when } \hat{p} = 0.5 $$ \Rightarrow SE \text{ is maximized}
+
+\[
+SE = \sqrt{\frac{0.5 \times (0.5)}{n}} = \frac{\sqrt{0.25}}{\sqrt{n}} = \frac{0.5}{\sqrt{n}} = \frac{1}{2 \sqrt{n}}
+\]
+
+\subsection*{Example: When $\hat{p} \neq 0.5$}
+\[
+SE = \sqrt{\frac{0.3 \times (1 - 0.3)}{n}} = \sqrt{\frac{0.21}{n}} = \frac{0.458}{\sqrt{n}} \approx \frac{0.91}{2\sqrt{n}}
+\]
+
+\subsection*{Example: When $\hat{p} = 0.2$}
+\[
+SE = \sqrt{\frac{0.2 \times (0.8)}{n}} = \sqrt{\frac{0.16}{n}} = \frac{0.4}{\sqrt{n}} = \frac{0.8}{2\sqrt{n}}
+\]
+
+\subsection*{Example: When $\hat{p} = 0.7$}
+\[
+SE = \sqrt{\frac{0.7 \times (0.3)}{n}} = \sqrt{\frac{0.21}{n}} = \frac{0.458}{\sqrt{n}} \approx \frac{0.91}{2\sqrt{n}}
+\]
+
+\subsection*{Observation}
+\[
+\text{Note that when both } \hat{p} < 0.5 \text{ and } \hat{p} > 0.5 \text{ the numerator decreases, along with the standard error.}
+\]
+
+\subsection*{For Maximum Standard Error}
+Set the maximum $SE$ to be within margin $M$.
+
+\[
+\frac{1}{\sqrt{n}} = M
+\]
+
+\[
+\Rightarrow \frac{1}{M} = \sqrt{n} \Rightarrow n = \frac{1}{M^2}
+\]
+
+\[
+\text{As long as } n \geq \frac{1}{M^2}, \text{ our error will be within } M.
+\]
+
+\end{document}
