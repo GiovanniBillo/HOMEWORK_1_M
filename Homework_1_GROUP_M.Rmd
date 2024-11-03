@@ -2,7 +2,11 @@
 ---
 title: "Homework 1"
 author: "Group M: Billo, Pizzignacco, El Gataa, Shahazad"
-output: pdf_document
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -19,271 +23,23 @@ library(dplyr)
 
 *Briefly describe the purpose of the homework or tasks to be accomplished.*
 
-## Task 1
-
-```{r task1}
-# Original code from the R script
-## Homework 1
-
-
-# FSDS: Chapter 2, exercises 2.8, 2.16, 2.21, 2.26, 2.52, 2.53, 2.70
-
-# 2.8
-#a
-# The probabilities of catching a virus at  each single visit are 
-# independent from the previous visits, they don;t sum up
-#b
-# assuming the question means the probability of catching a virus AT LEAST ONCE
-dbinom(1, 100, 0.01) # with "success" = catching the virus
-
-# 2.16
-obs = c(10, 8, 14, 7, 21, 44, 60)
-mean(obs)
-dpois(10, mean(obs))
-#a
-# The Poisson distribution might not model the phenomenon adequately
-# because there is a non-negligeable probability that multiple
-# events occur simoultaneously ( e.g car accident with multiple people 
-# being taken to the emergency room)
-# Also, variance is high, and there seems to be a hike in the weekends
-#b
-# The number of weekly admissions to a hospital for a rare disease could
-# be better modelled by a poisson distribution, as the events are independent
-# and (practically) cannot occur simoultaneously
-
-#2.21
-# Parameters for the gamma distribution
-shape <- 3    # Shape parameter
-scale = c(0.5, 1, 2, 3, 4, 5)
-
-# Generate a color for each curve
-colors <- rainbow(length(scale))  # Generate a unique color for each curve
-
-# Initial plot with the first gamma curve, setting up empty plot area
-y <- dgamma(x, shape = scale[1], rate = rate)
-plot(x, y, type = "n", ylim = c(0, 0.5),
-     main = "Gamma Distributions with Varying Shape Parameters",
-     xlab = "x", ylab = "Density")
-
-# Loop through each shape parameter, adding a curve with a unique color
-for (i in 1:length(scale)) {
-  y <- dgamma(x, shape = shape, rate = 1/scale[i])
-  lines(x, y, col = colors[i], lwd = 2)  # Plot each line with a unique color
-}
-
-# Add a legend with corresponding colors
-legend("topright", legend = paste("shape =", shape_values),
-       col = colors, lwd = 2, cex = 0.8)
-
-# As we increase the scale parameter, the distribution becomes much more sparse
-
-
-# 2.26
-#a
-# i)
-probabilities <- c(0.080, 0.043, 0.017, 0.198, 0.254, 0.105, 0.079, 0.143, 0.081)
-x <- c(1, 1, 1, 2, 2, 2, 3, 3, 3)
-y <- c(1, 2, 3, 1, 2, 3, 1, 2, 3)
-install.packages("wCorr")
-library(wCorr)
-# after entering install.packages("wCorr")
-corr_1 = weightedCorr(x, y, weights=probabilities)
-
-#INTERPRETATION:  by assigning equal weights 1, 2, 3 to family income and happiness
-# there seems to be a weak positive correlation between the variables
-
-# ii)
-probabilities <- c(0.080, 0.043, 0.017, 0.198, 0.254, 0.105, 0.079, 0.143, 0.081)
-x <- c(1, 1, 1, 4, 4, 4, 5, 5, 5)
-y <- c(1, 4, 5, 1, 4, 5, 1, 4, 5)
-library(wCorr)
-corr_2 = weightedCorr(x, y, weights=probabilities)
-
-#INTERPRETATION:  results are like the previous example, only now the correlation 
-# is slightly larger by assigning larger scores to "pretty happy" and "very happy"
-
-#b
-#??? idk
-  
-# 2.52
-  
-  
-# 2.53
-R = 1000000
-Y = rnorm(R)
-X = pnorm(R)
-
-hist(X) #uniform distribution
-hist(Y)
-
-# 2.70
-# b & c missing
-###################################################
-# Define parameters for alpha = beta cases
-alpha = beta = c(0.5, 1, 10, 100)
-
-# Generate a unique color for each curve
-colors <- rainbow(length(alpha))
-
-# Generate x-values
-x <- seq(0, 1, length.out = 100)
-
-# Set up the plot with no lines initially
-plot(x, dbeta(x, alpha[1], beta[1]), type = "n",
-     main = "Beta Distributions with same alpha-beta Parameters",
-     xlab = "x", ylab = "Density")
-
-# Loop through each shape parameter, add each curve
-for (i in 1:length(alpha)) {
-  # Calculate the beta PDF for each alpha = beta value
-  y <- dbeta(x, shape1 = alpha[i], shape2 = beta[i])
-  
-  # Plot each line with a unique color
-  lines(x, y, col = colors[i], lwd = 2)
-}
-
-# Add a legend
-legend("topright", legend = paste("alpha = beta =", alpha),
-       col = colors, lwd = 2, cex = 0.8)
-
-###############################################
-# with alpha > beta
-# Define parameters for alpha = beta cases
-alpha = c(0.5, 1, 10, 100)
-beta = c(0.3, 0.4, 5, 50)
-
-# Generate a unique color for each curve
-colors <- rainbow(length(alpha))
-
-# Generate x-values
-x <- seq(0, 1, length.out = 100)
-
-# Set up the plot with no lines initially
-plot(x, dbeta(x, alpha[1], beta[1]), type = "n",
-     main = "Beta Distributions with alpha > beta Parameters",
-     xlab = "x", ylab = "Density")
-
-# Loop through each shape parameter, add each curve
-for (i in 1:length(alpha)) {
-  # Calculate the beta PDF for each alpha = beta value
-  y <- dbeta(x, shape1 = alpha[i], shape2 = beta[i])
-  
-  # Plot each line with a unique color
-  lines(x, y, col = colors[i], lwd = 2)
-}
-
-# Add a legend
-legend("topright", legend = paste("alpha = ", alpha, "beta = ", beta),
-       col = colors, lwd = 2, cex = 0.8)
-
-
-#########################################################
-# with alpha < beta
-# Define parameters for alpha = beta cases
-alpha = c(0.5, 1, 10, 100)
-beta = c(0.7, 2, 20, 150)
-
-
-# Generate a unique color for each curve
-colors <- rainbow(length(alpha))
-
-# Generate x-values
-x <- seq(0, 1, length.out = 100)
-
-# Set up the plot with no lines initially
-plot(x, dbeta(x, alpha[1], beta[1]), type = "n",
-     main = "Beta Distributions with alpha < beta Parameters",
-     xlab = "x", ylab = "Density")
-
-# Loop through each shape parameter, add each curve
-for (i in 1:length(alpha)) {
-  # Calculate the beta PDF for each alpha = beta value
-  y <- dbeta(x, shape1 = alpha[i], shape2 = beta[i])
-  
-  # Plot each line with a unique color
-  lines(x, y, col = colors[i], lwd = 2)
-}
-
-# Add a legend
-legend("topright", legend = paste("alpha = ", alpha, "beta = ", beta),
-       col = colors, lwd = 2, cex = 0.8)
-
-# when alpha = beta, the distributions are centered and 
-# the tails get fatter as the parameters decrease
-
-# when alpha > beta the distributions are skewed to the right, with the corresponding tail being fatter
-
-# when alpha < beta the distributions are skewed to the left, with the corresponding tail being fatter
-
-######################################################################################################
-# FSDS: Chapter 3, exercises 3.18, 3.28, 3.24 (use R)
-##### 3.18
-n = 90000
-mean_age = 72
-sd = 12
-
-n_sample = 100
-sample_mean_age = 70 
-sample_sd = 11
-
-# having a large n for both population and sample, we can assume convergence to the normal distribution
-#a
-X_population = rnorm(n, mean = mean_age, sd = sd)
-mean(X_population)
-sd(X_population)
-hist(X_population)
-
-
-# the sample distribution will probably be more skewed, due to the smaller number of individuals
-# and the high standard deviation.
-
-#b
-X_sample = sample(X_population, size = n_sample)
-mean(X_sample)
-sd(X_sample)
-hist(X_sample)
-
-# the center is actually more right skewed, and describes the larger number of "younger" senior citizens that lives 
-# in Sunshine City. There are not as many people older than 80 as there are younger than 70 ( for biological reasons).
-
-#c
-# IT would not be unusual to sample a person whose age is 60 because it is within 1 standard deviation from the population mean (72), 
-# and in a normally distributed RV the interval within 1 sd from the mean contains approximately 68% of the variance.
-# However getting a sample with mean = 60 would be highly unusual because it would mean that we sampled a group of much younger individuals
-# than the actual population, which is very unlikely if the sample is truly random.
-
-#d
-hist(sample(X_population, size = 1))
-# not surprisingly, the sampling distribution uniform, consisting of just one value
-hist(sample(X_population, n))
-# now instead the sample is equal to the size of the population and is symmetric
-#
-
-
-
-
-```
- ## giovanni's version
 ## Block B
 
 ### CS: Chapter 1, exercises 1.1, 1.6
 
-*Place instructions and code chunk for Exercise B1 here.*
 
-```{r exercise_b1}
+```{r}
 # Placeholder for code for Exercise B1
 ```
 ### CS: Chapter 3, exercises 3.5, 3.6
 
-*Place instructions and code chunk for Exercise B1 here.*
 
-```{r exercise_b1}
+```{r}
 # Placeholder for code for Exercise B1
 ```
 
 ### FSDS: Chapter 2, exercises 2.8, 2.16, 2.21, 2.26, 2.52, 2.53, 2.70
 
-*Place instructions and code chunk for Exercise B2 here.*
 
 ```{r exercise_b2}
 # Placeholder for code for Exercise B2
@@ -291,7 +47,6 @@ hist(sample(X_population, n))
 
 ### FSDS: Chapter 3, exercises 3.18, 3.28, 3.24 
 
-*Place instructions and code chunk for Exercise B3 here.*
 
 ```{r exercise_b3}
 # Placeholder for code for Exercise B3
@@ -299,8 +54,7 @@ hist(sample(X_population, n))
 
 ### FSDS: Chapter 4, exercises 4.14, 4.16, 4.48 
 
-*Place instructions and code chunk for Exercise B4 here.*
-
+# Exercise 4.14
 ```{r 4.14}
 data = read.table("https://stat4ds.rwth-aachen.de/data/Students.dat", header = TRUE)
 summary(data)
@@ -359,8 +113,9 @@ CI_diff_uvars = mean_diff + c(-1, 1)*z*SE_diff
 
 Now we the interval crosses 0?? how is such a different result possible?
 
-```{r}
-#### 4.16 ####
+# Exercise 4.16
+```{r 4.16}
+
 data = read.table("https://stat4ds.rwth-aachen.de/data/Substance.dat", header = TRUE)
 
 # compare alcohol users and non-users
@@ -386,12 +141,67 @@ prop.test(c(955, 5), c(1949, 327), conf.level = alpha, correct = F)
 Interpretation: there seems to be a significant mean difference in the use of marijuana 
 between students that used alcohol before and students who didn't.
 
-### FSDS: Chapter 5, exercises 5.2, 5.12, 5.50
 
-*Place instructions and code chunk for Exercise B5 here.*
+# Exercise 4.48
+
+## Given
+
+\[
+\text{Given } \quad SE = \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}
+\]
+
+With 95% likelihood, find:
+$$ 
+SE \leq \frac{1}{\sqrt{n}} \quad \text{when } \hat{p} = 0.5 
+$$
+This is where \( SE \) is maximized.
+
+\[
+SE = \sqrt{\frac{0.5 \times (0.5)}{n}} = \frac{\sqrt{0.25}}{\sqrt{n}} = \frac{0.5}{\sqrt{n}} = \frac{1}{2 \sqrt{n}}
+\]
+
+## Example: When $\hat{p} \neq 0.5$
+
+\[
+SE = \sqrt{\frac{0.3 \times (1 - 0.3)}{n}} = \sqrt{\frac{0.21}{n}} = \frac{0.458}{\sqrt{n}} \approx \frac{0.91}{2\sqrt{n}}
+\]
+
+## Example: When $\hat{p} = 0.2$
+
+\[
+SE = \sqrt{\frac{0.2 \times (0.8)}{n}} = \sqrt{\frac{0.16}{n}} = \frac{0.4}{\sqrt{n}} = \frac{0.8}{2\sqrt{n}}
+\]
+
+## Example: When $\hat{p} = 0.7$
+
+\[
+SE = \sqrt{\frac{0.7 \times (0.3)}{n}} = \sqrt{\frac{0.21}{n}} = \frac{0.458}{\sqrt{n}} \approx \frac{0.91}{2\sqrt{n}}
+\]
+
+## Observation
+
+\[
+\text{Note that when both } \hat{p} < 0.5 \text{ and } \hat{p} > 0.5 \text{ the numerator decreases, along with the standard error.}
+\]
+
+## For Maximum Standard Error
+
+Set the maximum \( SE \) to be within margin \( M \).
+
+\[
+\frac{1}{\sqrt{n}} = M
+\]
+
+\[
+\Rightarrow \frac{1}{M} = \sqrt{n} \Rightarrow n = \frac{1}{M^2}
+\]
+
+As long as \( n \geq \frac{1}{M^2} \), our error will be within \( M \).
+
+
+
+### FSDS: Chapter 5, exercises 5.2, 5.12, 5.50 ###
 
 ```{r exercise_b5}
 # Placeholder for code for Exercise B5
 ```
-
-*Continue adding any additional missing exercises if identified.*
