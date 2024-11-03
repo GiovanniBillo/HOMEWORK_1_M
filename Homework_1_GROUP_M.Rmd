@@ -1,12 +1,18 @@
 
 ---
 title: "Homework 1"
-author: "Your Name"
-output: html_document
+author: "Group M: Billo, Pizzignacco, El Gataa, Shahazad"
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 # Load necessary libraries here if any
+#### TO USE GITHUB ####
+install.packages("usethis")
+library(usethis)
+
+#### other libraries ####
+library(dplyr)
 ```
 
 ## Introduction
@@ -18,12 +24,7 @@ output: html_document
 ```{r task1}
 # Original code from the R script
 ## Homework 1
-#### TO USE GITHUB ####
-install.packages("usethis")
-library(usethis)
 
-#### other libraries ####
-library(dplyr)
 
 # FSDS: Chapter 2, exercises 2.8, 2.16, 2.21, 2.26, 2.52, 2.53, 2.70
 
@@ -260,9 +261,47 @@ hist(sample(X_population, n))
 
 
 
-#########################################################################
-# FSDS: Chapter 4, exercises 4.14, 4.16, 4.48
-#### 4.14 ####
+
+```
+ ## giovanni's version
+## Block B
+
+### CS: Chapter 1, exercises 1.1, 1.6
+
+*Place instructions and code chunk for Exercise B1 here.*
+
+```{r exercise_b1}
+# Placeholder for code for Exercise B1
+```
+### CS: Chapter 3, exercises 3.5, 3.6
+
+*Place instructions and code chunk for Exercise B1 here.*
+
+```{r exercise_b1}
+# Placeholder for code for Exercise B1
+```
+
+### FSDS: Chapter 2, exercises 2.8, 2.16, 2.21, 2.26, 2.52, 2.53, 2.70
+
+*Place instructions and code chunk for Exercise B2 here.*
+
+```{r exercise_b2}
+# Placeholder for code for Exercise B2
+```
+
+### FSDS: Chapter 3, exercises 3.18, 3.28, 3.24 
+
+*Place instructions and code chunk for Exercise B3 here.*
+
+```{r exercise_b3}
+# Placeholder for code for Exercise B3
+```
+
+### FSDS: Chapter 4, exercises 4.14, 4.16, 4.48 
+
+*Place instructions and code chunk for Exercise B4 here.*
+
+```{r 4.14}
 data = read.table("https://stat4ds.rwth-aachen.de/data/Students.dat", header = TRUE)
 summary(data)
 #a
@@ -280,13 +319,13 @@ only_male = data %>% filter(gender == 0)
 only_female = data %>% filter(gender == 1)
 
 boxplot(only_male$tv, only_female$tv, names = c("Males", "Females"), ylab = "weekly hours watching tv")
-
-# assuming
-# -independent populations
-# -equal variances
-# - normality -> weakest assumption, barely 30 observations
-# --> use t student's distribution
-
+```
+assuming
+-independent populations
+-equal variances
+-normality -> weakest assumption, barely 30 observations
+--> use t student's distribution
+```{r}
 x_bar_male = mean(only_male$tv)
 x_bar_female = mean(only_female$tv)
 s_male = sd(only_male$tv)
@@ -304,18 +343,23 @@ CI_diff = mean_diff + c(-1, 1)*z*SE_diff
 
 # Test for equality of means
 t.test(only_male$tv, only_female$tv, conf.level = 0.05)
-# we can not state that the variances are significantly different betweent the 2 groups
-# However the confidence interval seems to suggest that females watch slightly more tv than males
+```
 
+We can not state that the variances are significantly different betweent the 2 groups
+However the confidence interval seems to suggest that females watch slightly more tv than males.
+
+```{r}
 # assuming unequal variance
 SE_diff = sqrt((s_male^2)/n_male + (s_female^2)/n_female)
 # t = (x_bar_male - x_bar_female)/(s_p*(1/n_male + 1/n_female))
 mean_diff = x_bar_male - x_bar_female
 z = qt(0.975, n_male + n_female - 2)
 CI_diff_uvars = mean_diff + c(-1, 1)*z*SE_diff
+```
 
-# now we the interval crosses 0?? how is such a different result possible?
+Now we the interval crosses 0?? how is such a different result possible?
 
+```{r}
 #### 4.16 ####
 data = read.table("https://stat4ds.rwth-aachen.de/data/Substance.dat", header = TRUE)
 
@@ -338,46 +382,11 @@ CI_prop = (pi_1_hat - pi_2_hat) + c(-1, 1)*z*sqrt(SE)
 
 #with software
 prop.test(c(955, 5), c(1949, 327), conf.level = alpha, correct = F)
-
-## interpretation: there seems to be a significant mean difference in the use of marijuana 
-## between students that used alcohol before and students who didn't.
 ```
+Interpretation: there seems to be a significant mean difference in the use of marijuana 
+between students that used alcohol before and students who didn't.
 
-## Missing Exercises - Block B
-
-### Exercise B1
-
-*Place instructions and code chunk for Exercise B1 here.*
-
-```{r exercise_b1}
-# Placeholder for code for Exercise B1
-```
-
-### Exercise B2
-
-*Place instructions and code chunk for Exercise B2 here.*
-
-```{r exercise_b2}
-# Placeholder for code for Exercise B2
-```
-
-### Exercise B3
-
-*Place instructions and code chunk for Exercise B3 here.*
-
-```{r exercise_b3}
-# Placeholder for code for Exercise B3
-```
-
-### Exercise B4
-
-*Place instructions and code chunk for Exercise B4 here.*
-
-```{r exercise_b4}
-# Placeholder for code for Exercise B4
-```
-
-### Exercise B5
+### FSDS: Chapter 5, exercises 5.2, 5.12, 5.50
 
 *Place instructions and code chunk for Exercise B5 here.*
 
