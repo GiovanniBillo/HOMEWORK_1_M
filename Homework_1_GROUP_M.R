@@ -322,3 +322,156 @@ prop.test(c(955, 5), c(1949, 327), conf.level = alpha, correct = F)
 
 ## interpretation: there seems to be a significant mean difference in the use of marijuana 
 ## between students that used alcohol before and students who didn't.
+
+
+###################
+#                 #
+# cs  es3.5; 3.6  #
+#                 #
+#                 #
+###################
+
+#Chapter 3 es 3.5
+
+#Ax = y
+set.seed(0)
+n <- 1000
+A <- matrix(runif(n * n), n, n)
+x.true <- runif(n)
+y <- A %*% x.true
+
+#b)
+
+start_time <- Sys.time()
+A_inv <- solve(A)
+x1 <- A_inv %*% y
+end_time <- Sys.time()
+time_taken <- end_time - start_time
+
+# Calcolare la differenza assoluta media
+mean_absolute_error <- mean(abs(x1 - x.true))
+
+print(time_taken)
+print(mean_absolute_error)
+
+#c)
+start_time_direct <- Sys.time()
+x2 <- solve(A, y)
+end_time_direct <- Sys.time()
+time_taken_direct <- end_time_direct - start_time_direct
+
+# Calcolare la differenza assoluta media
+mean_absolute_error_direct <- mean(abs(x2 - x.true))
+
+print(time_taken_direct)
+print(mean_absolute_error_direct)
+
+# d) Conclusione:
+
+# Conclusion:
+
+# Calculate time to explicitly form the inverse matrix A^-1 and solve Ax = y
+start_time <- Sys.time()
+A_inv <- solve(A)
+x1 <- A_inv %*% y
+end_time <- Sys.time()
+time_taken <- end_time - start_time
+
+# Calculate the mean absolute error between x1 and x.true
+mean_absolute_error <- mean(abs(x1 - x.true))
+
+print(time_taken)
+print(mean_absolute_error)
+
+# Calculate time to directly solve Ax = y without forming A^-1
+start_time_direct <- Sys.time()
+x2 <- solve(A, y)
+end_time_direct <- Sys.time()
+time_taken_direct <- end_time_direct - start_time_direct
+
+# Calculate the mean absolute error between x2 and x.true
+mean_absolute_error_direct <- mean(abs(x2 - x.true))
+
+print(time_taken_direct)
+print(mean_absolute_error_direct)
+
+# Conclusion:
+# Using 'solve' to directly solve the equation Ax = y is significantly faster (approximately 0.39 seconds) 
+# compared to explicitly forming A^-1 and then multiplying it by y (approximately 2.29 seconds).
+
+# While both solutions are very precise, directly solving with 'solve' yields a slightly smaller mean absolute error 
+# (approximately 1.36e-12) compared to forming the inverse (approximately 2.96e-11).
+
+# Therefore, solving the linear system directly without calculating the explicit inverse is preferable 
+# in terms of both efficiency and accuracy.
+
+
+#es 3.6
+
+#a)
+# Funzione per calcolare la ECDF
+ecdf_values <- function(x) {
+  # Numero totale di osservazioni
+  n <- length(x)
+  
+  # Ordinare i valori di x con sort.int mantenendo gli indici originali
+  sorted_x <- sort.int(x, index.return = TRUE)
+  
+  # Calcolare la ECDF per ogni valore in x
+  ecdf <- (1:n) / n
+  
+  # Riordinare i valori della ECDF nell'ordine originale
+  ecdf_original_order <- ecdf[order(sorted_x$ix)]
+  
+  return(ecdf_original_order)
+}
+
+# Test della funzione con un esempio
+set.seed(123)
+x <- rnorm(10)
+ecdf_values(x)
+
+
+#b)
+# Funzione per calcolare la ECDF e opzionalmente tracciarla
+ecdf_values <- function(x, plot.cdf = FALSE) {
+  # Numero totale di osservazioni
+  n <- length(x)
+  
+  # Ordinare i valori di x
+  sorted_x <- sort(x)
+  
+  # Calcolare la ECDF per ogni valore in x
+  ecdf <- sapply(x, function(xi) sum(sorted_x < xi) / n)
+  
+  # Se plot.cdf è TRUE, tracciare la ECDF
+  if (plot.cdf) {
+    plot(sort(x), ecdf[order(x)], type = "s", main = "Empirical Cumulative Distribution Function",
+         xlab = "x", ylab = "ECDF")
+  }
+  
+  return(ecdf)
+}
+
+# Test della funzione con un esempio
+set.seed(123)
+x <- rnorm(10)
+ecdf_values(x, plot.cdf = TRUE)
+
+# Generare campioni casuali
+set.seed(123)
+x_norm <- rnorm(100)
+x_unif <- runif(100)
+
+# Testare la funzione con distribuzione normale
+ecdf_norm <- ecdf_values(x_norm, plot.cdf = TRUE)
+
+# Testare la funzione con distribuzione uniforme
+ecdf_unif <- ecdf_values(x_unif, plot.cdf = TRUE)
+
+
+
+
+
+
+
