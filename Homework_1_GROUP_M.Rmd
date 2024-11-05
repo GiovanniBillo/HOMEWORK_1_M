@@ -493,9 +493,9 @@ FSDS: chapter 5, exercise 5.2, 5.42, 5.50
 ### Dati e Definizione del Problema
 
 Nel problema viene fornito che:
-- La popolazione totale è di \( N = 200 \)
-- La dimensione campionaria è \( n = 624 \)
-- La proporzione campionaria osservata è \( \hat{p} = 0.52 \) (ovvero 52%)
+- The total population is \( N = 200 \)
+- The sample size is \( n = 624 \)
+- The observed sample proportion is \( \hat{p} = 0.52 \) (ovvero 52%)
 
 ### Formulazione delle Ipotesi
 
@@ -505,7 +505,7 @@ Poniamo le seguenti ipotesi per il test statistico:
 
 ### Calcolo del Test Statistico
 
-Utilizziamo un test z per confrontare la proporzione campionaria con la proporzione ipotizzata. Calcoliamo quindi il valore di z e il p-value.
+We use a z-test to compare the sample proportion with the hypothesized proportion. We then calculate the z-value and the p-value.
 
 ```{r}
 # Dati
@@ -545,7 +545,7 @@ $$
 $$
 
 $$
-\sigma_b = 8.06
+\sigma_b = 8.01
 $$
 
 $$
@@ -579,7 +579,7 @@ SE = 1.544
 $$
 
 $$
-p\text{-value} = 0.024
+p\text{-value} = 0.021
 $$
 
 
