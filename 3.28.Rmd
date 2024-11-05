@@ -1,0 +1,42 @@
+---
+title: '3.28'
+output: html_document
+date: "2024-11-05"
+---
+
+```{r}
+# Estimating the required sample size to achieve a desired standard error for the sample proportion
+
+##information
+# The population proportion π may be near 0.50
+# The desired standard error of the sample proportion is 0.04
+
+##  required sample size
+# The standard error of the sample proportion is given by the formula:
+# SE(p̂) = sqrt(π * (1 - π) / n)
+# Where:
+# - p̂ is the sample proportion
+# - π is the population proportion
+# - n is the sample size
+
+# we need to find the sample size n such that the standard error is 0.04
+# Rearranging the formula, we get:
+# n = π * (1 - π) / (SE(p̂)^2)
+
+# Use a conservative estimate of the population proportion
+pi <- 0.50 
+
+# st error
+se <- 0.04
+
+# Calculate the required sample size
+n <- pi * (1 - pi) / (se^2)
+
+# Round up to the nearest integer
+n_required <- ceiling(n)
+
+## Print the result
+cat("The required sample size n should be", n_required, 
+    "to ensure the standard error of the sample proportion is 0.04 when the population proportion π may be near 0.50.")
+```
+
