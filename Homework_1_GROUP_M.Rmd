@@ -205,3 +205,120 @@ As long as \( n \geq \frac{1}{M^2} \), our error will be within \( M \).
 ```{r exercise_b5}
 # Placeholder for code for Exercise B5
 ```
+
+
+
+FSDS: chapter 5, exercise 5.2, 5.42, 5.50
+
+## Esercizio 5.2
+
+### Dati e Definizione del Problema
+
+Nel problema viene fornito che:
+- La popolazione totale è di \( N = 200 \)
+- La dimensione campionaria è \( n = 624 \)
+- La proporzione campionaria osservata è \( \hat{p} = 0.52 \) (ovvero 52%)
+
+### Formulazione delle Ipotesi
+
+Poniamo le seguenti ipotesi per il test statistico:
+- **Ipotesi nulla \( H_0 \)**: \( \pi = 0.50 \)
+- **Ipotesi alternativa \( H_1 \)**: \( \pi \neq 0.50 \)
+
+### Calcolo del Test Statistico
+
+Utilizziamo un test z per confrontare la proporzione campionaria con la proporzione ipotizzata. Calcoliamo quindi il valore di z e il p-value.
+
+```{r}
+# Dati
+N <- 200
+n <- 624
+p_hat <- 0.52  # Percentuale 52%
+
+# Calcolo del valore di z
+pi_0 <- 0.50  # valore ipotizzato sotto H0
+z <- (p_hat - pi_0) / sqrt((pi_0 * (1 - pi_0)) / N)
+z  # Mostra il valore di z
+
+# Calcolo del p-value
+p_value <- 2 * (1 - pnorm(abs(z)))
+p_value  # Output del p-value
+
+**Given that the p-value is 0.2646 and greater than 0.05, we cannot reject the null hypothesis**
+
+## Menu A
+
+$$
+\bar{X}_a = 22.30
+$$
+
+$$
+\sigma_a = 6.88
+$$
+
+$$
+n_a = 43
+$$
+
+## Menu B
+
+$$
+\bar{X}_b = 25.91
+$$
+
+$$
+\sigma_b = 8.06
+$$
+
+$$
+n_b = 50
+$$
+
+## Hypotheses
+
+$$
+H_0 : \mu_a = \mu_b \quad (\text{le medie sono uguali}) 
+$$
+
+$$
+H_a : \mu_a \neq \mu_b
+$$
+
+## t-test
+
+$$
+t = \frac{(\bar{X}_a - \bar{X}_b)}{\sqrt{\frac{\sigma_a^2}{n_a} + \frac{\sigma_b^2}{n_b}}} = \frac{22.30 - 25.91}{\sqrt{\frac{6.88^2}{43} + \frac{8.06^2}{50}}} \approx -2.34
+$$
+
+## Results
+
+$$
+df \approx 89
+$$
+
+$$
+SE = 1.544
+$$
+
+$$
+p\text{-value} = 0.024
+$$
+
+
+**ES 5.50**
+
+Given that the p-value is 0.057, and greater than 0.05, we cannot reject the null hypothesis.
+
+1. The p-value of 0.057 means there is a 5.7% probability of obtaining a result like the one observed (or more extreme) if the null hypothesis is true.
+2. The p-value of 0.057 indicates the probability of obtaining a test value as extreme as 120 or more extreme, given that the null hypothesis is true.
+3. The p-value of 0.057 does not represent the probability of a Type I error. The probability of a Type I error is determined by the significance level \(\alpha\), not by the p-value.
+4. We cannot accept $H_0$; we can only fail to reject it. Since the p-value of 0.057 is greater than 0.05, we do not have sufficient evidence to reject the null hypothesis at the 5% significance level.
+
+
+
+
+
+
+
+
+
