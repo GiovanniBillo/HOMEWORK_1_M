@@ -1,0 +1,160 @@
+---
+title: "terzo"
+output: html_document
+date: "2024-11-04"
+---
+
+### Terzo esercizio (3.24)
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(123)
+```
+
+## Possiblee Pop. Distribution
+
+Distribution for the number of alcoholic drinks consumed in the past day (Y) right-skewed distribution since:
+- Many people don't drink (0 drinks)
+- Some people have a few drinks
+- A smaller number of people have many drinks
+- Negative values are impossible
+
+```{r population}
+# Create population distribution parameters
+n_population <- 100000  # Large population size
+
+prob_zero <- 0.4  # 40% of people don't drink
+
+shape <- 1.5
+rate <- 1
+
+# Generate population data
+zeros <- rep(0, prob_zero * n_population)
+drinkers <- rgamma(n = (1 - prob_zero) * n_population, shape = shape, rate = rate)
+population <- c(zeros, drinkers)
+
+# Calculate population parameters (mean and standard dev)
+pop_mean <- mean(population)
+pop_sd <- sd(population)
+
+# Print population parameters
+print(paste("Population Mean:", round(pop_mean, 3)))
+print(paste("Population SD:", round(pop_sd, 3)))
+
+# Visualize population distribution
+hist(population, 
+     breaks = 50,
+     main = "Population Distribution of Daily Drinks",
+     xlab = "Number of Drinks",
+     ylab = "Frequency",
+     xlim = c(0, 10))
+```
+
+## A. Single Sample Analysis
+
+Let's draw one random sample of size 1000 from this population:
+
+```{r single_sample}
+# single sample
+sample_size <- 1000
+single_sample <- sample(population, size = sample_size, replace = TRUE)
+
+# sample statistics
+sample_mean <- mean(single_sample)
+sample_sd <- sd(single_sample)
+
+# comparisons
+print("Sample vs Population Statistics:")
+print(paste("Sample Mean:", round(sample_mean, 3), "vs Population Mean:", round(pop_mean, 3)))
+print(paste("Sample SD:", round(sample_sd, 3), "vs Population SD:", round(pop_sd, 3)))
+
+# Visualize sample distribution
+hist(single_sample, 
+     breaks = 30,
+     main = "Sample Distribution (n=1000)",
+     xlab = "Number of Drinks",
+     ylab = "Frequency",
+     xlim = c(0, 10))
+```
+
+## B. Sampling Distribution Analysis
+
+simulate 10,000 samples of size 1000 each to approximate the sampling distribution:
+
+```{r sampling_distribution}
+# Simulate 10000 samples
+n_simulations <- 10000
+sample_means <- numeric(n_simulations)
+
+for(i in 1:n_simulations) {
+    sample_means[i] <- mean(sample(population, size = sample_size, replace = TRUE))
+}
+
+# sampling distribution statistics
+sampling_mean <- mean(sample_means)
+sampling_sd <- sd(sample_means)
+
+# theoretical standard error
+theoretical_se <- pop_sd/sqrt(sample_size)
+
+# Print results
+print("Sampling Distribution Statistics:")
+print(paste("Simulated Mean of Sample Means:", round(sampling_mean, 4)))
+print(paste("Theoretical Mean (Population Mean):", round(pop_mean, 4)))
+print(paste("Simulated Standard Error:", round(sampling_sd, 4)))
+print(paste("Theoretical Standard Error:", round(theoretical_se, 4)))
+
+# Visualize sampling distribution
+hist(sample_means, 
+     breaks = 50,
+     main = "Sampling Distribution of Sample Mean",
+     xlab = "Sample Mean Number of Drinks",
+     ylab = "Frequency",
+     probability = TRUE)
+curve(dnorm(x, mean = pop_mean, sd = theoretical_se), 
+      add = TRUE, 
+      col = "red", 
+      lwd = 2)
+legend("topright", 
+       legend = c("Simulated Distribution", "Normal Approximation"),
+       col = c("grey", "red"),
+       lwd = c(1, 2))
+```
+
+## Key Observations
+
+1. Population Distribution:
+   - Right-skewed distribution
+   - 40% of people have 0 drinks
+   - Mean and standard deviation 
+   - Represents the true distribution of daily drinks in the population
+
+2. Single Sample (n = 1000):
+   - Shows similar shape to population
+   - Sample mean and standard deviation are close to population values
+   - Demonstrates what we might see in a real survey (real data)
+
+3. Sampling Distribution:
+   - Nearly normal in shape (Central Limit Theorem)
+   - Centered very close to the population mean
+   - Standard error (SD of sampling distribution) is close to theoretical value
+   - Represents the distribution of sample means if we repeated the survey many times
+   - Much narrower than the population distribution, showing that sample means vary less than individual observations
+
+4. Theory vs Simulation:
+   - Simulated results closely match theoretical expectations
+   - Small differences due to random variation in simulation
+   - Confirms the accuracy of our theoretical understanding of sampling distributions
+
+so we can demostrat that the sampling distribution of the mean becomes approximately normal (due to the CLT) even though the underlying population distribution is highly skewed.
+
+
+
+
+
+
+
+
+
+
+
