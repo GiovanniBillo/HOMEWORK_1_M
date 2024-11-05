@@ -27,9 +27,157 @@ library(dplyr)
 
 ### CS: Chapter 1, exercises 1.1, 1.6
 
-```{r}
-# Placeholder for code for Exercise B1
-```
+## Exercise 1: Deriving the CDF and Quantile Function 
+Given \[ x \geq 0 \] and \[
+f(x) = \lambda e^{-\lambda x}
+\]
+the CDF can be derived:
+\[
+F(x) = \int_{0}^{x} f(t) \, dt 
+     = \int_{0}^{x} \lambda e^{-\lambda t} \, dt 
+     = \lambda[\frac{-e^{-\lambda x}}{\lambda} + \frac{1}{\lambda} ]
+\]
+\[F(x) = 1 - e^{-\lambda x}\]
+
+Now having the cumulative distribution function (CDF) \( F(x) = 1 - e^{-\lambda x} \), we want to find the quantile function, i.e., its inverse.
+
+1. Starting with:
+   \[
+   y = 1 - e^{-\lambda x}
+   \]
+
+2. Rearrange to isolate \( x \):
+   \[
+   e^{-\lambda x} = 1 - y
+   \]
+   \[
+   -\lambda x = \ln(1 - y)
+   \]
+   \[
+   x = -\frac{\ln(1 - y)}{\lambda}
+   \]
+
+Thus, the quantile function is:
+\[
+x = -\frac{\ln(1 - y)}{\lambda}
+\]
+
+## Exercise 2.1: Finding \( P(X \leq \lambda) \)
+
+\( F(\lambda) = P(X \leq \lambda)\)
+\( F(\lambda) = 1 - e^{-\lambda \lambda}\)
+\( F(\lambda) = 1 - \frac{1}{e^{-\lambda^2}}\)
+
+
+## Exercise 2.2: Finding the median 
+by definition, the mean is the value s.t the F(x) = 0.5
+\[F_X(x) = 0.5\]
+\[1 - e^{- \lambda x} = 0.5\]
+\[0.5  = e^{- \lambda x}\]
+\[ln(0.5)  = - \lambda x\]
+\[x = \frac{ln(0.5)}{- \lambda} \]
+
+## Exercise 3: Finding Mean and Variance of \( Y \)
+
+### Mean
+
+The mean \( E(X) \) is given by:
+\[
+E(X) = \int_{0}^{\infty} x f(x) \, dx
+\]
+where \( f(x) = \lambda e^{-\lambda x} \). Calculate the integral:
+\[
+E(X) = \int_{0}^{\infty} x \lambda e^{-\lambda x} \, dx
+\]
+## Solution for \( E(X) = \int_{0}^{\infty} x \lambda e^{-\lambda x} \, dx \)
+
+We want to evaluate the expected value of \( X \), which is given by the integral:
+
+\[
+E(X) = \int_{0}^{\infty} x \lambda e^{-\lambda x} \, dx
+\]
+
+We can use integration by parts. Let:
+- \( u = x \) and \( dv = \lambda e^{-\lambda x} \, dx \).
+  
+Then, differentiate and integrate to get:
+- \( du = dx \)
+- \( v = -e^{-\lambda x} \)
+
+Using the formula \( \int u \, dv = uv - \int v \, du \), we get:
+
+\[
+E(X) = \left[ -x e^{-\lambda x} \right]_{0}^{\infty} + \int_{0}^{\infty} e^{-\lambda x} \, dx
+\]
+
+1. At \( x = \infty \), \( -x e^{-\lambda x} \to 0 \).
+2. At \( x = 0 \), \( -x e^{-\lambda x} = 0 \).
+
+So, the boundary terms sum to zero, leaving:
+
+\[
+E(X) = \int_{0}^{\infty} e^{-\lambda x} \, dx
+\]
+
+Now we integrate:
+
+\[
+\int_{0}^{\infty} e^{-\lambda x} \, dx = \frac{1}{\lambda}
+\]
+
+Thus, the expected value is:
+
+\[
+E(X) = \frac{1}{\lambda}
+\]
+
+### Variance
+
+The variance \( \text{Var}(X) \) is given by:
+\[
+\text{Var}(X) = E(X^2) - (E(X))^2
+\]
+
+Using \( E(X) = \frac{1}{\lambda} \), we calculate \( E(X^2) \) as:
+\[
+  \text{Var}(X) = \frac{2}{\lambda^2} - \frac{1}{\lambda^2} 
+\]
+Therefore, we get:
+\[
+\text{Var}(X)= \frac{1}{\lambda^2}
+\]
+
+## Exercise 5: Properties of Expected Values and Variance
+
+Having two random variables \( X \) and \( Y \) (not necessarily independent), we know:
+
+\( E(X + Y) = E(X) + E(Y) \)
+\[
+\text{Var}(X)= \sigma_x^2
+\]
+\[
+\text{Var}(Y)= \sigma_y^2
+\]
+Using the result 
+\[
+\text{Var}(X + Y)= \sigma_x^2 + \sigma_y^2 + 2\sigma_{xy}^2
+\]
+\[
+\text{Var}(X - Y)= \sigma_x^2 + \sigma_y^2 - 2\sigma_{xy}^2
+\]
+!!! not sure
+
+\frac{1}{\lambda^2}
+2. If \( X \sim N(\mu_X, \sigma_X^2) \) and \( Y \sim N(\mu_Y, \sigma_Y^2) \), then:
+   \[
+   \text{Var}(X + Y) = \sigma_X^2 + \sigma_Y^2 + 2 \, \text{Cov}(X, Y)
+   \]
+
+For independent \( X \) and \( Y \):
+\[
+\text{Var}(X + Y) = \sigma_X^2 + \sigma_Y^2
+\]
+
 
 
 ### CS: Chapter 3
@@ -338,10 +486,6 @@ As long as \( n \geq \frac{1}{M^2} \), our error will be within \( M \).
 # Placeholder for code for Exercise B5
 ```
 
-<<<<<<< HEAD
-=======
-
-
 FSDS: chapter 5, exercise 5.2, 5.42, 5.50
 
 ## Esercizio 5.2
@@ -447,13 +591,5 @@ Given that the p-value is 0.057, and greater than 0.05, we cannot reject the nul
 2. The p-value of 0.057 indicates the probability of obtaining a test value as extreme as 120 or more extreme, given that the null hypothesis is true.
 3. The p-value of 0.057 does not represent the probability of a Type I error. The probability of a Type I error is determined by the significance level \(\alpha\), not by the p-value.
 4. We cannot accept $H_0$; we can only fail to reject it. Since the p-value of 0.057 is greater than 0.05, we do not have sufficient evidence to reject the null hypothesis at the 5% significance level.
+!!! da correggere
 
-
-
-
-
-
-
-
-
->>>>>>> 934a9c40d2be50cb12920e5549347502c093efa2
