@@ -19,15 +19,13 @@ library(usethis)
 library(dplyr)
 ```
 
-## Introduction
+# Introduction
 
 *Briefly describe the purpose of the homework or tasks to be accomplished.*
 
-## Block B
+## CS: Chapter 1, exercises 1.1, 1.6
 
-### CS: Chapter 1, exercises 1.1, 1.6
-
-## Exercise 1: Deriving the CDF and Quantile Function 
+### Exercise 1.1.1: Deriving the CDF and Quantile Function 
 Given \[ x \geq 0 \] and \[
 f(x) = \lambda e^{-\lambda x}
 \]
@@ -62,34 +60,29 @@ Thus, the quantile function is:
 x = -\frac{\ln(1 - y)}{\lambda}
 \]
 
-## Exercise 2.1: Finding \( P(X \leq \lambda) \)
+### Exercise 1.1.2: Finding \( P(X \leq \lambda) \) and the median
 
 \( F(\lambda) = P(X \leq \lambda)\)
 \( F(\lambda) = 1 - e^{-\lambda \lambda}\)
 \( F(\lambda) = 1 - \frac{1}{e^{-\lambda^2}}\)
 
 
-## Exercise 2.2: Finding the median 
-by definition, the mean is the value s.t the F(x) = 0.5
+By definition, the mean is the value s.t the F(x) = 0.5
 \[F_X(x) = 0.5\]
 \[1 - e^{- \lambda x} = 0.5\]
 \[0.5  = e^{- \lambda x}\]
 \[ln(0.5)  = - \lambda x\]
 \[x = \frac{ln(0.5)}{- \lambda} \]
 
-## Exercise 3: Finding Mean and Variance of \( Y \)
+### Exercise 1.1.3: Finding Mean and Variance of \( Y \)
 
-### Mean
+Mean
 
 The mean \( E(X) \) is given by:
 \[
 E(X) = \int_{0}^{\infty} x f(x) \, dx
 \]
-where \( f(x) = \lambda e^{-\lambda x} \). Calculate the integral:
-\[
-E(X) = \int_{0}^{\infty} x \lambda e^{-\lambda x} \, dx
-\]
-## Solution for \( E(X) = \int_{0}^{\infty} x \lambda e^{-\lambda x} \, dx \)
+where \( f(x) = \lambda e^{-\lambda x} \). 
 
 We want to evaluate the expected value of \( X \), which is given by the integral:
 
@@ -131,7 +124,7 @@ Thus, the expected value is:
 E(X) = \frac{1}{\lambda}
 \]
 
-### Variance
+Variance
 
 The variance \( \text{Var}(X) \) is given by:
 \[
@@ -142,12 +135,13 @@ Using \( E(X) = \frac{1}{\lambda} \), we calculate \( E(X^2) \) as:
 \[
   \text{Var}(X) = \frac{2}{\lambda^2} - \frac{1}{\lambda^2} 
 \]
+
 Therefore, we get:
 \[
 \text{Var}(X)= \frac{1}{\lambda^2}
 \]
 
-## Exercise 5: Properties of Expected Values and Variance
+Properties of Expected Values and Variance
 
 Having two random variables \( X \) and \( Y \) (not necessarily independent), we know:
 
@@ -165,9 +159,7 @@ Using the result
 \[
 \text{Var}(X - Y)= \sigma_x^2 + \sigma_y^2 - 2\sigma_{xy}^2
 \]
-!!! not sure
 
-\frac{1}{\lambda^2}
 2. If \( X \sim N(\mu_X, \sigma_X^2) \) and \( Y \sim N(\mu_Y, \sigma_Y^2) \), then:
    \[
    \text{Var}(X + Y) = \sigma_X^2 + \sigma_Y^2 + 2 \, \text{Cov}(X, Y)
@@ -180,9 +172,9 @@ For independent \( X \) and \( Y \):
 
 
 
-### CS: Chapter 3
+## CS: Chapter 3
 
- exercises 3.5
+### exercise 3.5
 ```{r}
 # Ax = y
 set.seed(0)
@@ -254,7 +246,7 @@ Therefore, solving the linear system directly without calculating the explicit i
 in terms of both efficiency and accuracy.
 
 
-es 3.6
+### exercise 3.6
 
 ```{r}
 # a)
@@ -319,22 +311,237 @@ ecdf_norm <- ecdf_values(x_norm, plot.cdf = TRUE)
 ecdf_unif <- ecdf_values(x_unif, plot.cdf = TRUE)
 ```
 
+## FSDS: Chapter 3, exercises 3.18, 3.28, 3.24 
+
+### Exercise 3.18
+(a) Describe the center and spread of the population and sample data distributions
+
+```{r}
+# Population distribution
+population_mean <- 72
+population_sd <- 12
+# The population distribution is skewed to the left
+
+# Sample data distribution
+sample_size <- 100
+sample_mean <- 70
+sample_sd <- 11
+```
+The sample data distribution is likely also skewed to the left, similar to the population distribution
+(a) The population distribution has a mean of 72 years and a standard deviation of 12 years, and it is skewed to the left. This means that the population has more residents with ages higher than the mean compared to lower than the mean.
+The sample data distribution, with a sample size of 100 and a sample mean of 70 years and sample standard deviation of 11 years, is likely also skewed to the left, similar to the population distribution, since the population distribution is skewed to the left.
 
 
-### FSDS: Chapter 2, exercises 2.8, 2.16, 2.21, 2.26, 2.52, 2.53, 2.70
 
 
+(b) Find the center and spread of the sampling distribution of Y for n = 100
+```{r}
+# Center of the sampling distribution (mean of the sample means)
+sampling_mean <- population_mean
+# Spread of the sampling distribution (standard error of the sample mean)
+sampling_sd <- population_sd / sqrt(sample_size)
+```
+The sampling distribution of the sample mean has a normal shape, as per the Central Limit Theorem 
+The center of the sampling distribution (the mean of the sample means) is the same as the population mean, which is 72 years. The spread of the sampling distribution (the standard error of the sample mean) is given by the population standard deviation divided by the square root of the sample size, which is 12 / √100 = 1.2 years.
+ The sampling distribution of the sample mean has a normal shape, as per the Central Limit Theorem. This means that as the sample size increases, the sampling distribution becomes more and more normally distributed, regardless of the shape of the population distribution.
 
-### FSDS: Chapter 3, exercises 3.18, 3.28, 3.24 
+(c) Explain the difference between sampling a person of age 60 and the sample mean being 60
+It would not be unusual to sample a person of age 60 in Sunshine City, as the population distribution is skewed to the left and has a standard deviation of 12 years.
+However, it would be highly unusual for the sample mean to be 60, as the sampling distribution of the sample mean is centered at the population mean of 72, with a standard error of 1.2 (population SD / sqrt(sample size)).
+The probability of the sample mean being 60 is extremely low, given the narrow sampling distribution.
 
+(d) Describe the sampling distribution of Y
+ (i) For a random sample of size n = 1
+ The sampling distribution of Y for n = 1 would have  the same shape, center, and spread as the           population distribution.
+ The mean would be 72, the standard deviation would  be 12, and the distribution would be skewed to the l eft.
+ (ii) If you sample all 90,000 residents
+ If you sample all 90,000 residents, the sampling    distribution of Y would be a single point at the    population mean of 72,
+ with a standard deviation of 0 (as there is no      sampling variability when you sample the entire     population).
 
-```{r exercise_b3}
-# Placeholder for code for Exercise B3
+### Exercise 3.24
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(123)
 ```
 
-### FSDS: Chapter 4, exercises 4.14, 4.16, 4.48 
+## Possiblee Pop. Distribution
 
-# Exercise 4.14
+Distribution for the number of alcoholic drinks consumed in the past day (Y) right-skewed distribution since:
+- Many people don't drink (0 drinks)
+- Some people have a few drinks
+- A smaller number of people have many drinks
+- Negative values are impossible
+
+```{r population}
+# Create population distribution parameters
+n_population <- 100000  # Large population size
+
+prob_zero <- 0.4  # 40% of people don't drink
+
+shape <- 1.5
+rate <- 1
+
+# Generate population data
+zeros <- rep(0, prob_zero * n_population)
+drinkers <- rgamma(n = (1 - prob_zero) * n_population, shape = shape, rate = rate)
+population <- c(zeros, drinkers)
+
+# Calculate population parameters (mean and standard dev)
+pop_mean <- mean(population)
+pop_sd <- sd(population)
+
+# Print population parameters
+print(paste("Population Mean:", round(pop_mean, 3)))
+print(paste("Population SD:", round(pop_sd, 3)))
+
+# Visualize population distribution
+hist(population, 
+     breaks = 50,
+     main = "Population Distribution of Daily Drinks",
+     xlab = "Number of Drinks",
+     ylab = "Frequency",
+     xlim = c(0, 10))
+```
+
+## A. Single Sample Analysis
+
+Let's draw one random sample of size 1000 from this population:
+
+```{r single_sample}
+# single sample
+sample_size <- 1000
+single_sample <- sample(population, size = sample_size, replace = TRUE)
+
+# sample statistics
+sample_mean <- mean(single_sample)
+sample_sd <- sd(single_sample)
+
+# comparisons
+print("Sample vs Population Statistics:")
+print(paste("Sample Mean:", round(sample_mean, 3), "vs Population Mean:", round(pop_mean, 3)))
+print(paste("Sample SD:", round(sample_sd, 3), "vs Population SD:", round(pop_sd, 3)))
+
+# Visualize sample distribution
+hist(single_sample, 
+     breaks = 30,
+     main = "Sample Distribution (n=1000)",
+     xlab = "Number of Drinks",
+     ylab = "Frequency",
+     xlim = c(0, 10))
+```
+
+## B. Sampling Distribution Analysis
+
+simulate 10,000 samples of size 1000 each to approximate the sampling distribution:
+
+```{r sampling_distribution}
+# Simulate 10000 samples
+n_simulations <- 10000
+sample_means <- numeric(n_simulations)
+
+for(i in 1:n_simulations) {
+    sample_means[i] <- mean(sample(population, size = sample_size, replace = TRUE))
+}
+
+# sampling distribution statistics
+sampling_mean <- mean(sample_means)
+sampling_sd <- sd(sample_means)
+
+# theoretical standard error
+theoretical_se <- pop_sd/sqrt(sample_size)
+
+# Print results
+print("Sampling Distribution Statistics:")
+print(paste("Simulated Mean of Sample Means:", round(sampling_mean, 4)))
+print(paste("Theoretical Mean (Population Mean):", round(pop_mean, 4)))
+print(paste("Simulated Standard Error:", round(sampling_sd, 4)))
+print(paste("Theoretical Standard Error:", round(theoretical_se, 4)))
+
+# Visualize sampling distribution
+hist(sample_means, 
+     breaks = 50,
+     main = "Sampling Distribution of Sample Mean",
+     xlab = "Sample Mean Number of Drinks",
+     ylab = "Frequency",
+     probability = TRUE)
+curve(dnorm(x, mean = pop_mean, sd = theoretical_se), 
+      add = TRUE, 
+      col = "red", 
+      lwd = 2)
+legend("topright", 
+       legend = c("Simulated Distribution", "Normal Approximation"),
+       col = c("grey", "red"),
+       lwd = c(1, 2))
+```
+
+## Key Observations
+
+1. Population Distribution:
+   - Right-skewed distribution
+   - 40% of people have 0 drinks
+   - Mean and standard deviation 
+   - Represents the true distribution of daily drinks in the population
+
+2. Single Sample (n = 1000):
+   - Shows similar shape to population
+   - Sample mean and standard deviation are close to population values
+   - Demonstrates what we might see in a real survey (real data)
+
+3. Sampling Distribution:
+   - Nearly normal in shape (Central Limit Theorem)
+   - Centered very close to the population mean
+   - Standard error (SD of sampling distribution) is close to theoretical value
+   - Represents the distribution of sample means if we repeated the survey many times
+   - Much narrower than the population distribution, showing that sample means vary less than individual observations
+
+4. Theory vs Simulation:
+   - Simulated results closely match theoretical expectations
+   - Small differences due to random variation in simulation
+   - Confirms the accuracy of our theoretical understanding of sampling distributions
+
+so we can demostrat that the sampling distribution of the mean becomes approximately normal (due to the CLT) even though the underlying population distribution is highly skewed.
+
+### 3.28 
+```{r}
+# Estimating the required sample size to achieve a desired standard error for the sample proportion
+
+##information
+# The population proportion π may be near 0.50
+# The desired standard error of the sample proportion is 0.04
+
+##  required sample size
+# The standard error of the sample proportion is given by the formula:
+# SE(p̂) = sqrt(π * (1 - π) / n)
+# Where:
+# - p̂ is the sample proportion
+# - π is the population proportion
+# - n is the sample size
+
+# we need to find the sample size n such that the standard error is 0.04
+# Rearranging the formula, we get:
+# n = π * (1 - π) / (SE(p̂)^2)
+
+# Use a conservative estimate of the population proportion
+pi <- 0.50 
+
+# st error
+se <- 0.04
+
+# Calculate the required sample size
+n <- pi * (1 - pi) / (se^2)
+
+# Round up to the nearest integer
+n_required <- ceiling(n)
+
+## Print the result
+cat("The required sample size n should be", n_required, 
+    "to ensure the standard error of the sample proportion is 0.04 when the population proportion π may be near 0.50.")
+```
+
+## FSDS: Chapter 4, exercises 4.14, 4.16, 4.48 
+
+### Exercise 4.14
 ```{r 4.14}
 data = read.table("https://stat4ds.rwth-aachen.de/data/Students.dat", header = TRUE)
 summary(data)
@@ -391,9 +598,7 @@ z = qt(0.975, n_male + n_female - 2)
 CI_diff_uvars = mean_diff + c(-1, 1)*z*SE_diff
 ```
 
-Now we the interval crosses 0?? how is such a different result possible?
-
-# Exercise 4.16
+### Exercise 4.16
 ```{r 4.16}
 
 data = read.table("https://stat4ds.rwth-aachen.de/data/Substance.dat", header = TRUE)
@@ -422,7 +627,7 @@ Interpretation: there seems to be a significant mean difference in the use of ma
 between students that used alcohol before and students who didn't.
 
 
-# Exercise 4.48
+### Exercise 4.48
 
 ## Given
 
@@ -480,7 +685,7 @@ As long as \( n \geq \frac{1}{M^2} \), our error will be within \( M \).
 
 
 
-### FSDS: Chapter 5, exercises 5.2, 5.12, 5.50 ###
+## FSDS: Chapter 5, exercises 5.2, 5.12, 5.50 ###
 
 ```{r exercise_b5}
 # Placeholder for code for Exercise B5
@@ -488,22 +693,22 @@ As long as \( n \geq \frac{1}{M^2} \), our error will be within \( M \).
 
 FSDS: chapter 5, exercise 5.2, 5.42, 5.50
 
-## Esercizio 5.2
+## Exercise 5.2
 
-### Dati e Definizione del Problema
+### Data and problem definition
 
 Nel problema viene fornito che:
 - The total population is \( N = 200 \)
 - The sample size is \( n = 624 \)
-- The observed sample proportion is \( \hat{p} = 0.52 \) (ovvero 52%)
+- The observed sample proportion is \( \hat{p} = 0.52 \) (that is, 52%)
 
-### Formulazione delle Ipotesi
+### Hypotheses
 
-Poniamo le seguenti ipotesi per il test statistico:
-- **Ipotesi nulla \( H_0 \)**: \( \pi = 0.50 \)
-- **Ipotesi alternativa \( H_1 \)**: \( \pi \neq 0.50 \)
+We declare the following Null Hypotheses:
+- **Null Hypothesis \( H_0 \)**: \( \pi = 0.50 \)
+- **Alternative Hypothesis \( H_1 \)**: \( \pi \neq 0.50 \)
 
-### Calcolo del Test Statistico
+### Statistical Test calculation
 
 We use a z-test to compare the sample proportion with the hypothesized proportion. We then calculate the z-value and the p-value.
 
@@ -521,69 +726,76 @@ z  # Mostra il valore di z
 # Calcolo del p-value
 p_value <- 2 * (1 - pnorm(abs(z)))
 p_value  # Output del p-value
+```
 
-**Given that the p-value is 0.2646 and greater than 0.05, we cannot reject the null hypothesis**
+## Given Data for Menu A
 
-## Menu A
-
-$$
+\[
 \bar{X}_a = 22.30
-$$
+\]
 
-$$
+\[
 \sigma_a = 6.88
-$$
+\]
 
-$$
+\[
 n_a = 43
-$$
+\]
 
-## Menu B
+## Given Data for Menu B
 
-$$
+\[
 \bar{X}_b = 25.91
-$$
+\]
 
-$$
+\[
 \sigma_b = 8.01
-$$
+\]
 
-$$
+\[
 n_b = 50
-$$
+\]
 
 ## Hypotheses
 
-$$
-H_0 : \mu_a = \mu_b \quad (\text{le medie sono uguali}) 
-$$
+\[
+H_0 : \mu_a = \mu_b \quad (\text{the means are equal}) 
+\]
 
-$$
+\[
 H_a : \mu_a \neq \mu_b
-$$
+\]
 
-## t-test
+## t-test Calculation
 
-$$
-t = \frac{(\bar{X}_a - \bar{X}_b)}{\sqrt{\frac{\sigma_a^2}{n_a} + \frac{\sigma_b^2}{n_b}}} = \frac{22.30 - 25.91}{\sqrt{\frac{6.88^2}{43} + \frac{8.06^2}{50}}} \approx -2.34
-$$
+The t-statistic is calculated as follows:
+
+\[
+t = \frac{(\bar{X}_a - \bar{X}_b)}{\sqrt{\frac{\sigma_a^2}{n_a} + \frac{\sigma_b^2}{n_b}}} = \frac{22.30 - 25.91}{\sqrt{\frac{6.88^2}{43} + \frac{8.01^2}{50}}} \approx -2.34
+\]
 
 ## Results
 
-$$
+### Degrees of Freedom
+
+\[
 df \approx 89
-$$
+\]
 
-$$
+### Standard Error
+
+\[
 SE = 1.544
-$$
+\]
 
-$$
+### p-value
+
+\[
 p\text{-value} = 0.021
-$$
+\]
 
 
-**ES 5.50**
+## EX 5.50
 
 Given that the p-value is 0.057, and greater than 0.05, we cannot reject the null hypothesis.
 
@@ -591,5 +803,4 @@ Given that the p-value is 0.057, and greater than 0.05, we cannot reject the nul
 2. The p-value of 0.057 indicates the probability of obtaining a test value as extreme as 120 or more extreme, given that the null hypothesis is true.
 3. The p-value of 0.057 does not represent the probability of a Type I error. The probability of a Type I error is determined by the significance level \(\alpha\), not by the p-value.
 4. We cannot accept $H_0$; we can only fail to reject it. Since the p-value of 0.057 is greater than 0.05, we do not have sufficient evidence to reject the null hypothesis at the 5% significance level.
-!!! da correggere
 
