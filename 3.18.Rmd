@@ -1,0 +1,49 @@
+---
+title: '3.18'
+output: html_document
+date: "2024-11-05"
+---
+
+```{r}
+# (a) Describe the center and spread of the population and sample data distributions
+
+# Population distribution
+population_mean <- 72
+population_sd <- 12
+# The population distribution is skewed to the left
+
+# Sample data distribution
+sample_size <- 100
+sample_mean <- 70
+sample_sd <- 11
+# The sample data distribution is likely also skewed to the left, similar to the population distribution
+#(a) The population distribution has a mean of 72 years and a standard deviation of 12 years, and it is skewed to the left. This means that the population has more residents with ages higher than the mean compared to lower than the mean.
+#The sample data distribution, with a sample size of 100 and a sample mean of 70 years and sample standard deviation of 11 years, is likely also skewed to the left, similar to the population distribution, since the population distribution is skewed to the left.
+
+
+
+
+# (b) Find the center and spread of the sampling distribution of Y for n = 100
+# Center of the sampling distribution (mean of the sample means)
+sampling_mean <- population_mean
+# Spread of the sampling distribution (standard error of the sample mean)
+sampling_sd <- population_sd / sqrt(sample_size)
+# The sampling distribution of the sample mean has a normal shape, as per the Central Limit Theorem 
+#The center of the sampling distribution (the mean of the sample means) is the same as the population mean, which is 72 years. The spread of the sampling distribution (the standard error of the sample mean) is given by the population standard deviation divided by the square root of the sample size, which is 12 / √100 = 1.2 years.
+ #The sampling distribution of the sample mean has a normal shape, as per the Central Limit Theorem. This means that as the sample size increases, the sampling distribution becomes more and more normally distributed, regardless of the shape of the population distribution.
+
+# (c) Explain the difference between sampling a person of age 60 and the sample mean being 60
+# It would not be unusual to sample a person of age 60 in Sunshine City, as the population distribution is skewed to the left and has a standard deviation of 12 years.
+# However, it would be highly unusual for the sample mean to be 60, as the sampling distribution of the sample mean is centered at the population mean of 72, with a standard error of 1.2 (population SD / sqrt(sample size)).
+# The probability of the sample mean being 60 is extremely low, given the narrow sampling distribution.
+
+# (d) Describe the sampling distribution of Y
+# (i) For a random sample of size n = 1
+# The sampling distribution of Y for n = 1 would have the same shape, center, and spread as the population distribution.
+# The mean would be 72, the standard deviation would be 12, and the distribution would be skewed to the left.
+
+# (ii) If you sample all 90,000 residents
+# If you sample all 90,000 residents, the sampling distribution of Y would be a single point at the population mean of 72,
+# with a standard deviation of 0 (as there is no sampling variability when you sample the entire population).
+```
+
